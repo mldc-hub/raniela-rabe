@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172b45">
+<title>Raniela R. Rabe | Digital Contact Card</title>
+<style>
+:root{--navy:#172b45;--blue:#2875b9;--ink:#17212f;--muted:#657184;--line:#e6eaf0}
+*{box-sizing:border-box}body{margin:0;background:#f4f6f8;color:var(--ink);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+main{width:min(100% - 32px,620px);margin:36px auto}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 12px 36px #14243a12}
+.top{padding:30px 28px 24px;background:linear-gradient(135deg,#fff 0%,#f8fbff 100%)}
+.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;color:var(--blue)}
+h1{font-size:clamp(28px,6vw,38px);line-height:1.1;margin:10px 0 6px;letter-spacing:-.04em}
+.role{margin:0;color:var(--blue);font-size:15px;font-weight:800;letter-spacing:.08em}
+.company{margin:12px 0 0;color:var(--muted);font-size:13px;font-weight:650;letter-spacing:.08em}
+.details{padding:8px 28px 24px}
+.item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}.symbol{width:34px;height:34px;border-radius:10px;background:#edf5fc;color:var(--blue);display:grid;place-items:center;flex:none;font-weight:800}
+.label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.value{font-size:15px;overflow-wrap:anywhere}.value a{color:inherit;text-decoration:none}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 28px 28px}
+a.button,button.button{border:0;border-radius:12px;padding:14px 12px;text-align:center;text-decoration:none;font:700 14px inherit;cursor:pointer}
+.primary{background:var(--navy);color:#fff}.secondary{background:#edf2f7;color:var(--navy)}
+.photo{padding:22px 22px 26px;background:#fafbfc;border-top:1px solid var(--line)}
+.photo h2{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.photo img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px}
+.address{font-size:13px;color:var(--muted);margin:0 0 16px}
+footer{text-align:center;color:#8a94a3;font-size:12px;padding:18px}
+@media(max-width:420px){main{margin:16px auto}.top{padding:24px 20px 18px}.details{padding:4px 20px 18px}.actions{padding:0 20px 22px}.photo{padding:18px 14px 20px}}
+</style>
+</head>
+<body>
+<main>
+<section class="card">
+  <header class="top">
+    <div class="eyebrow">DIGITAL CONTACT CARD</div>
+    <h1>Raniela R. Rabe</h1>
+    <p class="role">PROJECT DIRECTOR</p>
+    <p class="company">OSTROM CLIMATE SOLUTIONS</p>
+  </header>
+  <section class="details" aria-label="Contact information">
+    <div class="item"><div class="symbol">☎</div><div><div class="label">Direct</div><div class="value"><a href="tel:+639175163456">+63 917 516 3456</a></div></div></div>
+    <div class="item"><div class="symbol">✉</div><div><div class="label">Email</div><div class="value"><a href="mailto:raniela.rabe@ostromclimate.com">raniela.rabe@ostromclimate.com</a></div></div></div>
+    <div class="item"><div class="symbol">◎</div><div><div class="label">Website</div><div class="value"><a href="https://ostromclimate.com" target="_blank" rel="noopener">ostromclimate.com</a></div></div></div>
+    <div class="item"><div class="symbol">⌖</div><div><div class="label">Office address</div><div class="value">AD-108, PhilSCAT, CLSU Compound, Science City of Muñoz, Nueva Ecija</div></div></div>
+    <div class="item"><div class="symbol">☎</div><div><div class="label">Company</div><div class="value"><a href="tel:+16046460400">+1 604 646 0400</a></div></div></div>
+  </section>
+  <div class="actions">
+    <a class="button primary" href="tel:+639175163456">Call Raniela</a>
+    <a class="button secondary" href="mailto:raniela.rabe@ostromclimate.com">Send Email</a>
+    <button class="button secondary" id="save" type="button">Save Contact (.vcf)</button>
+    <a class="button secondary" href="https://ostromclimate.com" target="_blank" rel="noopener">Company Website</a>
+  </div>
+  <section class="photo">
+    <h2>Original calling card</h2>
+    <p class="address">The original card is included below for reference.</p>
+    <img src="assets/original-calling-card.jpg" alt="Original Ostrom Climate Solutions calling card for Raniela R. Rabe">
+  </section>
+</section>
+<footer>Raniela R. Rabe · Ostrom Climate Solutions</footer>
+</main>
+<script>
+const vcard = `BEGIN:VCARD
+VERSION:3.0
+N:Rabe;Raniela;R.;
+FN:Raniela R. Rabe
+ORG:Ostrom Climate Solutions
+TITLE:Project Director
+TEL;TYPE=CELL,VOICE:+639175163456
+TEL;TYPE=WORK,VOICE:+16046460400
+EMAIL;TYPE=WORK:raniela.rabe@ostromclimate.com
+URL:https://ostromclimate.com
+ADR;TYPE=WORK:;;AD-108, PhilSCAT, CLSU Compound;Science City of Muñoz;Nueva Ecija;;Philippines
+END:VCARD`;
+document.getElementById('save').addEventListener('click',()=>{
+  const blob=new Blob([vcard],{type:'text/vcard;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download='Raniela-R-Rabe.vcf';a.click();
+  URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>
